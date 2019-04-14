@@ -1,0 +1,36 @@
+{
+    "name": "leetcode",
+    "version": "1.0.0",
+    "description": "some leetcode solutions",
+    "main": "index.js",
+    "dependencies": {
+        "ts-node": "^7.0.1"
+    },
+    "devDependencies": {
+        "@types/jest": "^24.0.11",
+        "@types/node": "^11.13.4",
+        "@types/underscore": "^1.8.14",
+        "jest": "^24.7.1",
+        "ts-jest": "^24.0.2",
+        "tslint": "^5.15.0",
+        "typescript": "^3.4.3",
+        "underscore": "^1.9.1"
+    },
+    "scripts": {
+        "start": "npm run test -- --watch",
+        "build": "tsc",
+        "test": "jest --forceExit --coverage --verbose",
+        "lint": "tslint -p .",
+        "format": "prettier --write \"*.{ts,js,json,prettierrc}\" \"src/**/*.{ts,js,json}\""
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/bave8672/leetcode.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/bave8672/leetcode/issues"
+    },
+    "homepage": "https://github.com/bave8672/leetcode#readme"
+}

@@ -1,5 +1,5 @@
 // Longest Substring Without Repeating Characters
-function lengthOfLongestSubstring(s: string): number {
+export function lengthOfLongestSubstring(s: string): number {
     let maxSubstrLength = 0;
     let wStart: number = 0;
     let wEnd: number = -1;
@@ -19,10 +19,3 @@ function lengthOfLongestSubstring(s: string): number {
 
     return maxSubstrLength;
 }
-
-import assert from "assert";
-assert.equal(lengthOfLongestSubstring(""), 0);
-assert.equal(lengthOfLongestSubstring("asx"), 3);
-assert.equal(lengthOfLongestSubstring("abcabcbb"), 3);
-assert.equal(lengthOfLongestSubstring("bbbbb"), 1);
-assert.equal(lengthOfLongestSubstring("qrsvbspk"), 5);
