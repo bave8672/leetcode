@@ -3,6 +3,6 @@ module.exports = {
     testEnvironment: "node",
     collectCoverage: true,
     collectCoverageFrom: ["src/**/*.ts"],
-    testPathIgnorePatterns: ["/node_modules/", "/.build/"],
+    testPathIgnorePatterns: ["/node_modules/", "/.build/", "build"],
     verbose: true
 };

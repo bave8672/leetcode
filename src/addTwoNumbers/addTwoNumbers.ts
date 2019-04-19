@@ -1,14 +1,14 @@
-interface ListNode<T = number> {
+interface IListNode<T = number> {
     val: T;
-    next: ListNode | null;
+    next: IListNode | null;
 }
 
 function addTwoNumbers(
-    l1: ListNode | null,
-    l2: ListNode | null
-): ListNode | null {
-    let rNode: ListNode = { val: -1, next: null };
-    const headRef: ListNode = rNode;
+    l1: IListNode | null,
+    l2: IListNode | null,
+): IListNode | null {
+    let rNode: IListNode = { val: -1, next: null };
+    const headRef: IListNode = rNode;
     let carry: number = 0;
 
     while (l1 || l2 || carry) {
