@@ -1,6 +1,6 @@
 import { isMatch } from "./regular-expression-matching";
 
-fdescribe(`regular experssion matching`, () => {
+describe(`regular experssion matching`, () => {
     it(`should match an empty string`, () =>
         expect(isMatch("", "")).toBe(true));
     it(`should match a basic char pattern`, () =>
