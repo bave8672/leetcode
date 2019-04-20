@@ -1,19 +1,26 @@
-function medianOfSortedArray(nums: number[]): number {
+export function medianOfSortedArray(nums: number[]): number {
     return nums.length % 2
         ? nums[(nums.length - 1) / 2]
         : (nums[nums.length / 2] + nums[nums.length / 2 - 1]) / 2;
 }
 
-function findMedianSortedArrays(nums1: number[], nums2: number[]): number {
-    // console.log(nums1, nums2);
-
+// tslint:disable-next-line: cognitive-complexity
+export function findMedianSortedArrays(
+    nums1: number[],
+    nums2: number[],
+): number {
     // Case where one array is empty
     // Result is median of no-empty array
     if (nums1.length === 0) {
         return medianOfSortedArray(nums2);
     } else if (nums2.length === 0) {
         return medianOfSortedArray(nums1);
-    } else if (nums1[nums1.length - 1] <= nums2[0]) {
+    }
+
+    // Case where arrays do not intersect
+    // Combine arrays in O(1)
+    // Median is median of combined array
+    if (nums1[nums1.length - 1] <= nums2[0]) {
         return medianOfSortedArray([...nums1, ...nums2]);
     } else if (nums2[nums2.length - 1] <= nums1[0]) {
         return medianOfSortedArray([...nums2, ...nums1]);
@@ -63,22 +70,3 @@ function findMedianSortedArrays(nums1: number[], nums2: number[]): number {
 
     return findMedianSortedArrays(newNums1, newNums2);
 }
-
-import assert from "assert";
-assert.equal(medianOfSortedArray([1, 2, 3]), 2);
-assert.equal(medianOfSortedArray([1, 1, 3, 2]), 2);
-assert.equal(findMedianSortedArrays([1, 2], [3, 4]), 2.5);
-assert.equal(findMedianSortedArrays([1, 2], [3]), 2);
-assert.equal(findMedianSortedArrays([1, 3], [2]), 2);
-assert.equal(findMedianSortedArrays([1, 2], [-1, 3]), 1.5);
-assert.equal(findMedianSortedArrays([1, 2, 2], [1, 2, 3]), 2);
-assert.equal(findMedianSortedArrays([2], [1, 3, 4]), 2.5);
-assert.equal(findMedianSortedArrays([1, 2, 3, 8], [4, 5, 6, 7]), 4.5);
-assert.equal(
-    findMedianSortedArrays(
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 4],
-        [1, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4],
-    ),
-    3,
-);
-assert.equal(findMedianSortedArrays([1, 3, 4], [2]), 2.5);

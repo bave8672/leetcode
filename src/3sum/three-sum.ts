@@ -8,6 +8,8 @@
  * Note:
  * The solution set must not contain duplicate triplets.
  */
+
+// tslint:disable-next-line: cognitive-complexity
 export function threeSum(nums: number[]): number[][] {
     const results: number[][] = [];
 
@@ -26,15 +28,6 @@ export function threeSum(nums: number[]): number[][] {
         // search remaining array for matches
         while (lo < hi) {
             const sum = nums[i] + nums[lo] + nums[hi];
-
-            // console.log({
-            //     i,
-            //     lo,
-            //     hi,
-            //     sum,
-            //     results
-            // });
-            // debugger;
 
             if (sum === 0) {
                 results.push([nums[i], nums[lo], nums[hi]]);

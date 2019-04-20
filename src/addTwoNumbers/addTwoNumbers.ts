@@ -5,12 +5,13 @@ interface IListNode<T = number> {
 
 function addTwoNumbers(
     l1: IListNode | null,
-    l2: IListNode | null,
+    l2: IListNode | null
 ): IListNode | null {
     let rNode: IListNode = { val: -1, next: null };
     const headRef: IListNode = rNode;
     let carry: number = 0;
 
+    // tslint:disable-next-line: no-gratuitous-expressions
     while (l1 || l2 || carry) {
         rNode.next = { val: -1, next: null };
         rNode = rNode.next;

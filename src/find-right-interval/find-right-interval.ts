@@ -13,7 +13,6 @@ export const findRightInterval = (intervals: Array<[number, number]>) => {
                 return;
             }
             const p = Math.floor((i + j) / 2);
-            // debugger;
             if (sortedLeft[p][0] === interval[1]) {
                 result[map.get(interval)] = map.get(sortedLeft[p]);
                 return;

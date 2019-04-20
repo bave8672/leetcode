@@ -23,10 +23,10 @@ function mergeKLists(lists: Array<ListNode<number>>): ListNode<number> | null {
         return null;
     }
     const result = new ListNode(sortedList[0]);
-    let node = result;
+    let currentNode = result;
     for (let i = 1; i < sortedList.length; i++) {
-        node.next = new ListNode(sortedList[i]);
-        node = node.next;
+        currentNode.next = new ListNode(sortedList[i]);
+        currentNode = currentNode.next;
     }
     return result;
 }

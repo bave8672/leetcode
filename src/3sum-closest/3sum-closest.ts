@@ -17,15 +17,6 @@ export const threeSumClosest = (nums: number[], target: number) => {
             const sum = nums[i] + nums[lo] + nums[hi];
             const dist = Math.abs(sum - target);
 
-            // console.log({
-            //     nums,
-            //     i,
-            //     lo,
-            //     hi,
-            //     sum,
-            //     dist
-            // });
-
             // check against best answer
             if (dist < closestDistance) {
                 closestDistance = dist;
