@@ -9,7 +9,7 @@ export class BinaryTree<T> {
         let depth = 1;
         while (i < input.length) {
             let addedNodes = 0;
-            for (let j = 0; j <= depth; j++) {
+            for (let j = 0; j < depth * 2; j++) {
                 if (input[i] !== null && input[i] !== undefined) {
                     const node = new BinaryTree(input[i]!);
                     nodes[Math.floor(j / 2)][j % 2 ? "right" : "left"] = node;

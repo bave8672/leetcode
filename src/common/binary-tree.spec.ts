@@ -27,4 +27,10 @@ describe("binary tree parsing", () => {
         expect(tree!.right!.left!.left).toBe(null);
         expect(tree!.right!.left!.right).toBe(null);
     });
+
+    it("4", () => {
+        const tree = BinaryTree.parse([20, 15, 7, null, 6, 7, 8, -1, -2, -99]);
+        expect(tree!.val).toBe(20);
+        expect(tree!.left!.right!.left!.val).toBe(-1);
+    });
 });
