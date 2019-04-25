@@ -1,6 +1,6 @@
 import { findSubstring } from "./substring-with-concatenation-of-all-words";
 
-fdescribe(`substring-with-concatenation-of-all-words`, () => {
+describe(`substring-with-concatenation-of-all-words`, () => {
     it(`1`, () => {
         expect(findSubstring("barfoothefoobarman", ["foo", "bar"])).toEqual([
             0,

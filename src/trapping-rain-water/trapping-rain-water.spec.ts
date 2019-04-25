@@ -1,6 +1,6 @@
 import { trap } from "./trapping-rain-water";
 
-fdescribe(`trapping rain water`, () => {
+describe(`trapping rain water`, () => {
     it(`1`, () => {
         expect(trap([0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1])).toBe(6);
     });
