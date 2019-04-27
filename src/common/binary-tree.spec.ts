@@ -33,4 +33,70 @@ describe("binary tree parsing", () => {
         expect(tree!.val).toBe(20);
         expect(tree!.left!.right!.left!.val).toBe(-1);
     });
+
+    it(`5`, () => {
+        const tree = BinaryTree.parse([
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            null,
+            11,
+            null,
+            12,
+            null,
+            null,
+            null,
+            13,
+            null,
+        ])!;
+        expect(tree.right!.right!.left!.val).toBe(12);
+    });
+
+    it("6", () => {
+        const tree = BinaryTree.parse([
+            0,
+            1,
+            null,
+            null,
+            2,
+            3,
+            null,
+            null,
+            4,
+            5,
+        ]);
+        expect(tree!.val).toBe(0);
+        expect(tree!.left!.right!.left!.right!.left!.val).toBe(5);
+    });
+
+    it("7", () => {
+        const tree = BinaryTree.parse([
+            0,
+            1,
+            2,
+            3,
+            4,
+            null,
+            null,
+            5,
+            null,
+            null,
+            6,
+            null,
+            7,
+            null,
+            null,
+            null,
+            9,
+        ]);
+        expect(tree!.val).toBe(0);
+        expect(tree!.left!.left!.left!.right!.right!.val).toBe(9);
+    });
 });
