@@ -1,4 +1,4 @@
-import { findRedundantDirectedConnection } from "./redundant-connection-ii";
+import { findRedundantDirectedConnection } from "./redundant-connection-ii.1";
 
 describe("redundant-connection-ii", () => {
     it(`0`, () =>
