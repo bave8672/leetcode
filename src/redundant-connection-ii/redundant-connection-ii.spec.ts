@@ -65,4 +65,22 @@ describe("redundant-connection-ii", () => {
         ]);
         expect(result).toEqual([2, 1]);
     });
+    /**
+     * ```
+     *      1 -> 4
+     *     /    |
+     *    v     v
+     *    2 -> 3
+     * ```
+     */
+    it(`8`, () => {
+        const result = findRedundantDirectedConnection([
+            [1, 2],
+            [2, 3],
+            [3, 1],
+            [1, 4],
+            [4, 3],
+        ]);
+        expect(result).toEqual([4, 3]);
+    });
 });
