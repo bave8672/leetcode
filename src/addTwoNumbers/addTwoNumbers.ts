@@ -3,9 +3,9 @@ interface IListNode<T = number> {
     next: IListNode | null;
 }
 
-function addTwoNumbers(
+export function addTwoNumbers(
     l1: IListNode | null,
-    l2: IListNode | null
+    l2: IListNode | null,
 ): IListNode | null {
     let rNode: IListNode = { val: -1, next: null };
     const headRef: IListNode = rNode;
