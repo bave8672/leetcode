@@ -4,7 +4,7 @@ export function findSubstring(s: string, words: string[]): number[] {
         return [];
     }
 
-    const results = new Set();
+    const results = new Set<number>();
     const wordLength = words[0].length;
 
     let matchIndex = 0;
@@ -12,7 +12,9 @@ export function findSubstring(s: string, words: string[]): number[] {
 
     while (matchIndex <= s.length - wordLength && matchIndex !== -1) {
         const map = new Map<string, number>();
-        words.slice(1).forEach((word) => map.set(word, (map.get(word) || 0) + 1));
+        words
+            .slice(1)
+            .forEach((word) => map.set(word, (map.get(word) || 0) + 1));
         matchIndex = s.indexOf(words[0], matchFrom);
         if (matchIndex === -1) {
             continue;
