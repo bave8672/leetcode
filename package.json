@@ -19,6 +19,7 @@
         "underscore": "^1.9.1"
     },
     "scripts": {
+        "add": "npx ts-node ./scripts/add-problem.ts",
         "start": "npm run test -- --watch",
         "build": "tsc",
         "test": "jest --forceExit --coverage --verbose",
