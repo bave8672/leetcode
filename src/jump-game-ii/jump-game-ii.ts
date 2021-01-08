@@ -40,11 +40,11 @@ function jump(nums: number[]): number {
     let steps = 0;
     let i = 0;
     while (maxIndexAtCurrentStep < nums.length - 1) {
+        maxIndexAtNextStep = Math.max(i + nums[i], maxIndexAtNextStep);
         if (i >= maxIndexAtCurrentStep) {
             steps++;
-            maxIndexAtCurrentStep = Math.max(i + nums[i], maxIndexAtNextStep);
+            maxIndexAtCurrentStep = maxIndexAtNextStep;
         }
-        maxIndexAtNextStep = Math.max(i + nums[i], maxIndexAtNextStep);
         i++;
     }
     return steps;
