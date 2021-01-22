@@ -55,76 +55,111 @@
  *
  */
 
-export function checkWays(pairs: number[][]): number {
-    const list = buildList(pairs);
-    if (list.length <= 1) {
-        return list.length;
-    }
-    if (list[list.length - 1].size !== list.length) {
+// tslint:disable-next-line: cognitive-complexity
+export function checkWays(
+    pairs: number[][],
+    map = buildMap(pairs),
+    list = buildList(map),
+    depth = 0,
+    mustFindRoot = true,
+): number {
+    /**
+     * Use fact that the tree must contain one or more "root" nodes
+     * which is connected to all others below
+     *
+     * if none such node exists, the answer is 0
+     * if multiple roots exist, the answer is 2
+     *
+     * find the root node(s), then solve the identical subproblem for each child node
+     * final answer is 0 if any are 0, otherwise 2 if any are 2, otherwise 1
+     *
+     * time O(n^2 * log(n)) space O(n^2)
+     */
+    if (map.size === 0) {
         return 0;
     }
-    let ways = 1;
-    const sets = [new Set([list[list.length - 1].x])];
-    for (let i = list.length - 2; i >= 0; i--) {
-        if (
-            list[i].size === list[i + 1].size &&
-            list[i].sum === list[i + 1].sum &&
-            list[i].prod === list[i + 1].prod
-        ) {
-            ways = 2;
-        }
-        const set = sets.find(
-            (s) =>
-                [...s].every((x) => list[i].set.has(x)) &&
-                (i > 0 || [...list[i].set].every((x) => s.has(x))),
-        );
-        if (!set) {
-            return 0;
-        }
-        sets.unshift(new Set([list[i].x, ...set]));
+    if (list.length === 0) {
+        return 1;
     }
-    return ways;
+    let ways = 1;
+    const roots: number[] = [];
+    const rootPairs = list.length - 1 + depth;
+    while (list.length && map.get(list[list.length - 1])!.size === rootPairs) {
+        const root = list.pop()!;
+        roots.push(root);
+    }
+    const isRoot = roots.length > 0;
+    if (roots.length === 0) {
+        if (mustFindRoot) {
+            return 0;
+        } else {
+            roots.push(list.pop()!);
+        }
+    }
+    if (roots.length > 1) {
+        ways = 2;
+    }
+    const [oldList, newList] = splitPairs(roots, map, list);
+    if (!isRoot) {
+        newList.push(...roots);
+    }
+    return [
+        ways,
+        checkWays(pairs, map, oldList, depth, false),
+        checkWays(
+            pairs,
+            map,
+            newList,
+            depth + (isRoot ? roots.length : 0),
+            !isRoot,
+        ),
+    ].reduce((prev, next) =>
+        prev === 0 || next === 0 ? 0 : prev === 2 || next === 2 ? 2 : 1,
+    );
 }
 
-function buildList(pairs: number[][]): NodeSummary[] {
-    const map = new Map<number, NodeSummary>();
-    for (const [x, y] of pairs) {
-        let summaryX = map.get(x);
-        if (!summaryX) {
-            summaryX = new NodeSummary(x);
-            summaryX.add(y);
-            map.set(x, summaryX);
+function splitPairs(
+    xs: number[],
+    map: Map<number, Set<number>>,
+    list: number[],
+): [number[], number[]] {
+    const originalList: number[] = [];
+    const pairsList: number[] = [];
+    for (const x of list) {
+        if (map.get(xs[0])!.has(x)) {
+            pairsList.push(x);
         } else {
-            summaryX.add(y);
-        }
-        let summaryY = map.get(y);
-        if (!summaryY) {
-            summaryY = new NodeSummary(y);
-            summaryY.add(x);
-            map.set(y, summaryY);
-        } else {
-            summaryY.add(x);
+            originalList.push(x);
         }
     }
+    return [originalList, pairsList];
+}
+
+function buildMap(pairs: number[][]): Map<number, Set<number>> {
+    const map = new Map<number, Set<number>>();
+    for (const [x, y] of pairs) {
+        let setX = map.get(x);
+        if (!setX) {
+            setX = new Set();
+            setX.add(y);
+            map.set(x, setX);
+        } else {
+            setX.add(y);
+        }
+        let setY = map.get(y);
+        if (!setY) {
+            setY = new Set();
+            setY.add(x);
+            map.set(y, setY);
+        } else {
+            setY.add(x);
+        }
+    }
+    return map;
+}
+
+function buildList(map: Map<number, Set<number>>): number[] {
     return Array.from(map)
         .sort((a, b) => a[1].size - b[1].size)
-        .map(([, summary]) => summary);
-}
-
-class NodeSummary {
-    size: number = 0;
-    sum: number = 0;
-    prod: number = 1;
-    set = new Set<number>();
-
-    public add(x: number) {
-        this.size++;
-        this.sum += x;
-        this.prod *= x;
-        this.set.add(x);
-    }
-
-    public constructor(public x: number) {
-        this.add(x);
-    }
+        .map(([x]) => x);
 }

@@ -1,6 +1,6 @@
 import { checkWays } from "./number-of-ways-to-reconstruct-a-tree";
 
-xdescribe("number-of-ways-to-reconstruct-a-tree", () => {
+describe("number-of-ways-to-reconstruct-a-tree", () => {
     spec(
         [
             [1, 2],
@@ -75,6 +75,19 @@ xdescribe("number-of-ways-to-reconstruct-a-tree", () => {
         ],
         0,
     );
+    spec(
+        [
+            [1, 2],
+            [1, 3],
+            [1, 4],
+            [1, 5],
+            [2, 3],
+            [2, 4],
+            [4, 5],
+        ],
+        0,
+    );
+    spec([], 0);
 
     function spec(pairs: number[][], expected: number) {
         it(`${JSON.stringify({ pairs, expected })}`, () => {
