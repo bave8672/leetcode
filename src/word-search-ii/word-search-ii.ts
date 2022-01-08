@@ -1,3 +1,5 @@
+// tslint:disable
+
 /**
  * https://leetcode.com/problems/word-search-ii/
  *
@@ -9,7 +11,7 @@
  */
 
 export function findWords(board: string[][], words: string[]): string[] {
-    // map chars t their position on the board
+    // map chars to their position on the board
     // to allow O(1) lookup of char existence
     // And worst case O(n * m) if board letters are identical, best case O(1) if board letters are unique
     // Create time = O(m * n), space O(m * n)
@@ -66,5 +68,104 @@ export function findWords(board: string[][], words: string[]): string[] {
             ids.splice(nextIdId, 0, nextId);
         }
         return found;
+    }
+}
+
+/**
+ * Using a trie - interestingly this is slower
+ */
+export function findWordsTrie(board: string[][], words: string[]) {
+    const root = new Trie(words);
+    const used: ((true | undefined)[] | undefined)[] = [];
+    const res: string[] = [];
+    function* findLetters(letter: string) {
+        for (let i = 0; i < board.length; i++) {
+            for (let j = 0; j < board[0].length; j++) {
+                if (board[i][j] === letter && !(used[i] && used[i]![j])) {
+                    yield [i, j];
+                }
+            }
+        }
+    }
+    function* findLettersFrom(letter: string, [i, j]: [number, number]) {
+        for (const [k, l] of [
+            [i - 1, j],
+            [i, j - 1],
+            [i, j + 1],
+            [i + 1, j],
+        ] as [number, number][]) {
+            if ((board[k] || [])[l] === letter && !(used[k] && used[k]![l])) {
+                yield [k, l];
+            }
+        }
+    }
+    function dp(
+        trie: Trie,
+        word: string,
+        prev: [number, number] | undefined,
+    ): boolean {
+        // keep running permutations until all words in the tree are found
+        const nexts = prev
+            ? findLettersFrom(word[word.length - 1], prev)
+            : findLetters(word[word.length - 1]);
+        for (const next of nexts) {
+            if (trie.isWord) {
+                // if this node represents a word, making it here means there is a path;
+                // add it to the result list and don't search for it again
+                res.push(word);
+                if (trie.children.size === 0) {
+                    return true;
+                }
+                trie.isWord = false;
+            }
+            // record use of this next value
+            if (!used[next[0]]) {
+                used[next[0]] = [];
+            }
+            used[next[0]]![next[1]] = true;
+            for (const [letter, child] of trie.children.entries()) {
+                if (dp(child, word + letter, next as [number, number])) {
+                    // trim the tree if complete
+                    trie.children.delete(letter);
+                    if (trie.children.size === 0) {
+                        used[next[0]]![next[1]] = undefined;
+                        return true;
+                    }
+                }
+            }
+            used[next[0]]![next[1]] = undefined;
+        }
+        return false;
+    }
+    for (const [letter, child] of root.children.entries()) {
+        dp(child, letter, undefined);
+    }
+    return res;
+}
+
+export class Trie {
+    readonly children = new Map<string, Trie>();
+    isWord: boolean = false;
+
+    constructor(words: string[] = []) {
+        for (const word of words) {
+            this.addWord(word);
+        }
+    }
+
+    addWord(word: string, i = 0) {
+        if (i >= word.length) {
+            return;
+        }
+        let child = this.children.get(word[i]);
+        if (!child) {
+            child = new Trie();
+            this.children.set(word[i], child);
+        }
+        if (i === word.length - 1) {
+            child.isWord = true;
+        } else {
+            child.addWord(word, i + 1);
+        }
     }
 }
