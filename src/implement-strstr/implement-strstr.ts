@@ -64,6 +64,21 @@ export function strStr2(haystack: string, needle: string): number {
 }
 
 /**
+ * Using a z array O(n) time & space
+ */
+export function strStr3(haystack: string, needle: string): number {
+    return Math.max(
+        computeZFunction(`${needle}$${haystack}`).indexOf(
+            needle.length,
+            needle.length + 1,
+        ) -
+            needle.length -
+            1,
+        -1,
+    );
+}
+
+/**
  * https://cp-algorithms.com/string/z-function.html
  * O(n^2)
  */
@@ -81,8 +96,25 @@ export function computeZFunctionTrivial(s: string) {
 
 /**
  * https://cp-algorithms.com/string/z-function.html
- * O(n)
+ * O(n) time & space
  */
 export function computeZFunction(s: string) {
-    // todo
+    const z: number[] = [0];
+    let l = 0;
+    let r = 0;
+    for (let i = 1; i < s.length; i++) {
+        if (i <= r) {
+            z[i] = Math.min(z[i - l], 1 + r - i);
+        } else {
+            z[i] = 0;
+        }
+        while (s[z[i]] === s[i + z[i]] && i + z[i] < s.length) {
+            z[i]++;
+        }
+        if (i + z[i] > r) {
+            l = i;
+            r = i + z[i] - 1;
+        }
+    }
+    return z;
 }
