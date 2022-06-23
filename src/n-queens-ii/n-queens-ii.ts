@@ -10,8 +10,8 @@ function totalNQueens(
     queens = 0,
     X = initialRowOrColumn(n),
     Y = initialRowOrColumn(n),
-    XY = new Set(),
-    YX = new Set(),
+    XY = new Set<number>(),
+    YX = new Set<number>(),
 ): number {
     if (queens === n && n !== 0) {
         return 1;

@@ -53,9 +53,9 @@ import { ${camelToSnakeCase(problem)} } from "./${problem}";
 describe("${problem}", () => {
     spec();
 
-    function spec(in: unknown, expected: unknown) {
-        it(\`\${JSON.stringify({ args })}\`, () => {
-            expect(${camelToSnakeCase(problem)}(in)).toEqual(expected);
+    function spec(input: any, expected: any) {
+        it(\`\${JSON.stringify({ input, expected })}\`, () => {
+            expect(${camelToSnakeCase(problem)}(input)).toEqual(expected);
         });
     }
 })
